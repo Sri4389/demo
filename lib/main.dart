@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/models/product_model.dart';
+import 'package:myapp/screens/product_detail_screen.dart';
 import 'screens/login_signup_screen.dart';
 import 'screens/home_screen.dart';
 
@@ -20,6 +22,10 @@ class ScreenovaApp extends StatelessWidget {
       routes: {
         '/login': (context) => LoginSignupScreen(),
         '/home': (context) => HomeScreen(),
+        // when i click on add button in home screen, it will navigate to product detail screen
+        '/productDetail': (context) => ProductDetailScreen(
+          product: ModalRoute.of(context)!.settings.arguments as Product,
+        ),
       },
     );
   }
