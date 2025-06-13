@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/screens/login_signup_screen.dart';
 import '../models/onboarding_model.dart';
 import '../widgets/onboarding_item.dart';
 
@@ -107,15 +108,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   void _finishOnboarding() {
     // Navigate to login or home
-    // Navigator.pushReplacement(
-    //   context,
-    //   MaterialPageRoute(builder: (_) => LoginScreen()), // Replace with actual screen
-    // );
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Welcome to Screenova'),
-        duration: Duration(seconds: 2),
-      ),
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (_) => LoginSignupScreen()), // Replace with actual screen
     );
+    // ScaffoldMessenger.of(context).showSnackBar(
+    //   SnackBar(
+    //     content: Text('Welcome to Screenova'),
+    //     duration: Duration(seconds: 2),
+    //   ),
+    // );
   }
 }
