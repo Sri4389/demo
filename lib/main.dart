@@ -22,7 +22,6 @@ class ScreenovaApp extends StatelessWidget {
       routes: {
         '/login': (context) => LoginSignupScreen(),
         '/home': (context) => HomeScreen(),
-        // when i click on add button in home screen, it will navigate to product detail screen
         '/productDetail': (context) => ProductDetailScreen(
           product: ModalRoute.of(context)!.settings.arguments as Product,
         ),
