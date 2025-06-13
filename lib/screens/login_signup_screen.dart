@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/screens/onboarding_screen.dart';
 
 class LoginSignupScreen extends StatefulWidget {
   @override
@@ -22,8 +23,17 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
     if (_formKey.currentState!.validate()) {
       final email = emailController.text;
       final password = passwordController.text;
-      // TODO: Firebase or backend login/signup logic
-      print('${isLogin ? "Login" : "Sign Up"} with $email / $password');
+      if (email == 'admin' && password == 'admin123') {
+        // Navigator.pushNamed(context, '/adminDashboard');
+        Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => OnboardingScreen()),
+      );
+      } else if (isLogin) {
+        print('Logging in with $email and $password');
+      } else {
+        print('Signing up with $email and $password');
+      }
     }
   }
 
