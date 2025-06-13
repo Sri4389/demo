@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/screens/product_detail_screen.dart';
-import 'package:myapp/widgets/product_card.dart';
 import 'screens/login_signup_screen.dart';
 import 'screens/home_screen.dart';
 

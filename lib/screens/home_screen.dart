@@ -48,7 +48,11 @@ class HomeScreen extends StatelessWidget {
                 return ProductCard(
                   product: products[index],
                   onAdd: () {
-                    // Add to cart logic
+                    Navigator.pushNamed(
+                      context,
+                      '/productDetail',
+                      arguments: products[index],
+                    );
                   },
                 );
               },
