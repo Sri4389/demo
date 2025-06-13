@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/screens/onboarding_screen.dart';
 
 class LoginSignupScreen extends StatefulWidget {
   @override
@@ -24,15 +23,12 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
       final email = emailController.text;
       final password = passwordController.text;
       if (email == 'admin' && password == 'admin123') {
-        // Navigator.pushNamed(context, '/adminDashboard');
-        Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) => OnboardingScreen()),
-      );
-      } else if (isLogin) {
-        print('Logging in with $email and $password');
+        Navigator.pushReplacementNamed(context, '/home');
       } else {
-        print('Signing up with $email and $password');
+        // Show error message for invalid credentials
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Invalid email or password')),
+        );
       }
     }
   }
@@ -82,7 +78,15 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
               ),
               SizedBox(height: 24),
               ElevatedButton(
-                onPressed: handleSubmit,
+                onPressed: () =>{
+                  if(emailController.text == 'admin' && passwordController.text == 'admin123') {
+                    Navigator.pushReplacementNamed(context, '/home')
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Invalid email or password')),
+                    )
+                  }
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.green,
                   padding: EdgeInsets.symmetric(vertical: 14),

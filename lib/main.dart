@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/screens/splash_screen.dart';
+import 'screens/login_signup_screen.dart';
+import 'screens/home_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(ScreenovaApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
+class ScreenovaApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Grocery App',
+      title: 'Screenova',
       debugShowCheckedModeBanner: false,
-      home: SplashScreen(),
+      theme: ThemeData(
+        primarySwatch: Colors.green,
+        fontFamily: 'Roboto',
+      ),
+      initialRoute: '/login',
+      routes: {
+        '/login': (context) => LoginSignupScreen(),
+        '/home': (context) => HomeScreen(),
+      },
     );
   }
 }
