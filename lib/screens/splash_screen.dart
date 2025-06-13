@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -12,9 +13,20 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 3), () {
-      Navigator.pushNamed(context, '/Onboarding');
-    });
+     _checkFirstLaunch();
+  }
+
+    Future<void> _checkFirstLaunch() async {
+      await Future.delayed(Duration(seconds: 2));
+      
+      final prefs = await SharedPreferences.getInstance();
+      final bool hasSeenOnboarding = prefs.getBool('onboarding_completed') ?? false;
+      
+      if (!hasSeenOnboarding) {
+        Navigator.pushReplacementNamed(context, '/onboarding');
+      } else {
+        Navigator.pushReplacementNamed(context, '/login');
+      }
   }
 
   @override

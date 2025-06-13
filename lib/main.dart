@@ -23,7 +23,7 @@ class ScreenovaApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => SplashScreen(),
-        '/Onboarding': (context) => OnboardingScreen(),
+        '/onboarding': (context) => OnboardingScreen(),
         '/login': (context) => LoginSignupScreen(),
         '/home': (context) => HomeScreen(),
         '/productDetail': (context) => ProductDetailScreen(
