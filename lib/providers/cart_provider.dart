@@ -53,10 +53,6 @@ class CartProvider with ChangeNotifier {
     notifyListeners();
   }
   double get totalPrice {
-    double total = 0.0;
-    for (final item in items) {
-      total += item.product.price * item.quantity;
-    }
-    return total;
+    return _items.fold(0, (sum, item) => sum + item.product.price * item.quantity);
   }
 }
