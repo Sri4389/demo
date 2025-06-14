@@ -1,74 +1,71 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/screens/address_screen.dart';
-
+import 'package:provider/provider.dart';
+import '../providers/cart_provider.dart';
+import '../models/cart_item_model.dart';
 
 class CheckoutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final Address selectedAddress =
-        ModalRoute.of(context)!.settings.arguments as Address;
+    final cartProvider = Provider.of<CartProvider>(context);
+    final List<CartItem> selectedItems = cartProvider.selectedItems;
 
-    // Sample cart data (replace with your real cart model)
-    final List<Map<String, dynamic>> cartItems = [
-      {"name": "Apples", "qty": 2, "price": 60},
-      {"name": "Milk", "qty": 1, "price": 50},
-      {"name": "Bread", "qty": 1, "price": 40},
-    ];
-
-    final int total = cartItems.fold(
-        0, (sum, item) => sum + ((item["qty"] * item["price"]) as int));
-
-    void _placeOrder() {
-      // You may add order logic here (API call, Firebase write, etc.)
-      Navigator.pushNamed(
-        context,
-        '/order-success',
-        arguments: {
-          "orderId": "ORD${DateTime.now().millisecondsSinceEpoch}",
-          "total": total,
-        },
+    if (selectedItems.isEmpty) {
+      return Scaffold(
+        appBar: AppBar(title: Text("Checkout")),
+        body: Center(child: Text("No items selected for checkout.")),
       );
     }
 
+    final total = cartProvider.totalSelectedPrice;
+
     return Scaffold(
-      appBar: AppBar(title: Text("Checkout")),
+      appBar: AppBar(
+        title: Text("Checkout"),
+        backgroundColor: Colors.green,
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Delivery Address",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
-            SizedBox(height: 8),
-            Card(
-              child: ListTile(
-                title: Text("${selectedAddress.name} - ${selectedAddress.phone}"),
-                subtitle: Text(
-                    "${selectedAddress.street}, ${selectedAddress.city}, ${selectedAddress.zip}, ${selectedAddress.state}"),
-              ),
-            ),
-            SizedBox(height: 16),
             Text("Order Summary",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
-            ...cartItems.map((item) => ListTile(
-                  title: Text(item["name"]),
-                  subtitle: Text("Qty: ${item["qty"]}"),
-                  trailing: Text("₹${item["qty"] * item["price"]}"),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            SizedBox(height: 12),
+            ...selectedItems.map((item) => Card(
+                  child: ListTile(
+                    leading: Image.asset(item.product.image, width: 50, fit: BoxFit.cover),
+                    title: Text(item.product.name),
+                    subtitle: Text("Qty: ${item.quantity}"),
+                    trailing: Text("₹${item.product.price * item.quantity}"),
+                  ),
                 )),
             Divider(),
             ListTile(
-              title: Text("Total", style: TextStyle(fontWeight: FontWeight.bold)),
-              trailing: Text("₹$total", style: TextStyle(fontWeight: FontWeight.bold)),
+              title: Text("Total",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              trailing: Text("₹${total.toStringAsFixed(2)}",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             ),
-            SizedBox(height: 20),
-            ElevatedButton.icon(
-              icon: Icon(Icons.check_circle),
-              label: Text("Place Order"),
-              onPressed: _placeOrder,
+            SizedBox(height: 24),
+            ElevatedButton(
+              onPressed: () {
+                final orderId = "ORD${DateTime.now().millisecondsSinceEpoch}";
+                Navigator.pushNamed(
+                  context,
+                  '/order-success',
+                  arguments: {
+                    "orderId": orderId,
+                    "total": total,
+                    "items": selectedItems,
+                  },
+                );
+              },
+              child: Text("Place Order"),
               style: ElevatedButton.styleFrom(
                 minimumSize: Size(double.infinity, 50),
+                backgroundColor: Colors.green,
               ),
-            ),
+            )
           ],
         ),
       ),
