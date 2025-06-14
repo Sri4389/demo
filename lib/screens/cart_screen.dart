@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/models/cart_item_model.dart';
 import 'package:provider/provider.dart';
 import '../providers/cart_provider.dart';
 
@@ -9,11 +10,11 @@ class CartScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("My Cart"),
+        title: const Text("My Cart"),
         backgroundColor: Colors.green,
       ),
       body: cart.items.isEmpty
-          ? Center(child: Text("Your cart is empty"))
+          ? const Center(child: Text("Your cart is empty"))
           : Column(
               children: [
                 Expanded(
@@ -21,40 +22,56 @@ class CartScreen extends StatelessWidget {
                     itemCount: cart.items.length,
                     itemBuilder: (context, index) {
                       final item = cart.items[index];
-                      return ListTile(
-                        leading: Image.asset(item.product.image, width: 50),
-                        title: Text(item.product.name),
-                        subtitle: Text("₹${item.product.price} x ${item.quantity}"),
-                        trailing: IconButton(
-                          icon: Icon(Icons.delete),
-                          onPressed: () => cart.removeFromCart(item.product),
-                        ),
-                      );
+                      return CartItemTile(item: item);
                     },
                   ),
                 ),
-                Divider(),
+                const Divider(),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
                     children: [
-                      Text("Total: ₹${cart.totalPrice.toStringAsFixed(2)}", style: TextStyle(fontSize: 20)),
-                      SizedBox(height: 10),
+                      Text(
+                        "Total: ₹${cart.totalPrice.toStringAsFixed(2)}",
+                        style: const TextStyle(fontSize: 20),
+                      ),
+                      const SizedBox(height: 10),
                       ElevatedButton(
                         onPressed: () {
-                          
+                          Navigator.pushNamed(context, '/manage-address');
                         },
-                        child: Text("Proceed to Checkout"),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.green,
-                          padding: EdgeInsets.symmetric(horizontal: 40, vertical: 14),
+                          padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 14),
                         ),
-                      )
+                        child: const Text("Proceed to Checkout"),
+                      ),
                     ],
                   ),
-                )
+                ),
               ],
             ),
+    );
+  }
+}
+
+class CartItemTile extends StatelessWidget {
+  final CartItem item;
+
+  const CartItemTile({super.key, required this.item});
+
+  @override
+  Widget build(BuildContext context) {
+    final cart = Provider.of<CartProvider>(context, listen: false);
+
+    return ListTile(
+      leading: Image.asset(item.product.image, width: 50, fit: BoxFit.cover),
+      title: Text(item.product.name),
+      subtitle: Text("₹${item.product.price} x ${item.quantity}"),
+      trailing: IconButton(
+        icon: const Icon(Icons.delete),
+        onPressed: () => cart.removeFromCart(item.product),
+      ),
     );
   }
 }
