@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:myapp/screens/onboarding_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -13,18 +13,20 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 3), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) => OnboardingScreen()), // Replace with LoginScreen/OnboardingScreen
-      );
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //   SnackBar(
-      //     content: Text('Welcome to Screenova'),
-      //     duration: Duration(seconds: 2),
-      //   ),
-      // );
-    });
+     _checkFirstLaunch();
+  }
+
+    Future<void> _checkFirstLaunch() async {
+      await Future.delayed(Duration(seconds: 2));
+      
+      final prefs = await SharedPreferences.getInstance();
+      final bool hasSeenOnboarding = prefs.getBool('onboarding_completed') ?? false;
+      
+      if (!hasSeenOnboarding) {
+        Navigator.pushReplacementNamed(context, '/onboarding');
+      } else {
+        Navigator.pushReplacementNamed(context, '/login');
+      }
   }
 
   @override
