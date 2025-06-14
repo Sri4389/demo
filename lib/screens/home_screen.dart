@@ -7,6 +7,9 @@ class HomeScreen extends StatelessWidget {
     Product(id: '1', name: 'Tomato', image: 'assets/onboarding1.png', price: 20, category: 'Vegetables'),
     Product(id: '2', name: 'Milk', image: 'assets/onboarding1.png', price: 40, category: 'Dairy'),
     Product(id: '3', name: 'Apple', image: 'assets/onboarding1.png', price: 90, category: 'Fruits'),
+    Product(id: '4', name: 'Tomato', image: 'assets/onboarding1.png', price: 20, category: 'Vegetables'),
+    Product(id: '5', name: 'Milk', image: 'assets/onboarding1.png', price: 40, category: 'Dairy'),
+    Product(id: '6', name: 'Apple', image: 'assets/onboarding1.png', price: 90, category: 'Fruits'),
   ];
 
   @override
@@ -39,7 +42,7 @@ class HomeScreen extends StatelessWidget {
               padding: EdgeInsets.all(12),
               itemCount: products.length,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, // 2 items per row
+                crossAxisCount: 2,
                 mainAxisSpacing: 12,
                 crossAxisSpacing: 12,
                 childAspectRatio: 0.65,

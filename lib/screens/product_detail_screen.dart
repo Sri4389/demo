@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../models/product_model.dart';
+import '../providers/cart_provider.dart';
 
 class ProductDetailScreen extends StatefulWidget {
   final Product product;
@@ -68,7 +70,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           SizedBox(height: 30),
           ElevatedButton(
             onPressed: () {
-              // TODO: Add to cart logic
+              Provider.of<CartProvider>(context, listen: false).addToCart(product);
+              Navigator.pushNamed(context, '/cart');
             },
             style: ElevatedButton.styleFrom(
               padding: EdgeInsets.symmetric(vertical: 14),
