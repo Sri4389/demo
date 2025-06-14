@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/models/product_model.dart';
 import 'package:myapp/providers/cart_provider.dart';
+import 'package:myapp/screens/address_screen.dart';
 import 'package:myapp/screens/cart_screen.dart';
+import 'package:myapp/screens/checkout_screen.dart';
 import 'package:myapp/screens/onboarding_screen.dart';
+import 'package:myapp/screens/order_success_screen.dart';
 import 'package:myapp/screens/product_detail_screen.dart';
 import 'package:myapp/screens/splash_screen.dart';
 import 'package:provider/provider.dart';
@@ -40,6 +43,9 @@ class ScreenovaApp extends StatelessWidget {
           product: ModalRoute.of(context)!.settings.arguments as Product,
         ),
         '/cart': (context) => CartScreen(),
+        '/manage-address': (context) => ManageAddressScreen(),
+        '/checkout': (context) => CheckoutScreen(),
+        '/order-success': (context) => OrderSuccessScreen(),
       },
     );
   }

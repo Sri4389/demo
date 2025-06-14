@@ -42,7 +42,7 @@ class CartScreen extends StatelessWidget {
                       SizedBox(height: 10),
                       ElevatedButton(
                         onPressed: () {
-                          // TODO: Navigate to checkout
+                          
                         },
                         child: Text("Proceed to Checkout"),
                         style: ElevatedButton.styleFrom(
